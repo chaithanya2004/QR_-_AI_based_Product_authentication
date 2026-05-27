@@ -3,7 +3,7 @@ setuptools>=68.0.0
 wheel
 
 # Core ML
-tensorflow-cpu==2.15.0
+tensorflow==2.15.0 
 numpy==1.24.3
 pandas==2.1.4
 scikit-learn==1.3.2
