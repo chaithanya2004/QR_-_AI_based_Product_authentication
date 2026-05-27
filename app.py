@@ -10,6 +10,11 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
 # ---------------- QR Verification Model ----------------
 model = tf.keras.models.load_model('model/qr_authenticator_model.h5')
 UPLOAD_FOLDER = 'static/uploads'
