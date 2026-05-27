@@ -1,0 +1,316 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+
+    <style>
+        body {
+            background: #0d0d0d;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .box {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 20px;
+            width: 60%;
+            margin: auto;
+            box-shadow: 0px 0px 15px #00eaff;
+        }
+
+        img {
+            margin-top: 20px;
+            border-radius: 10px;
+            width: 260px;
+            border: 3px solid #00eaff;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #00eaff;
+            border-radius: 10px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        a:hover {
+            background: #0099ff;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            text-align: left;
+            margin-left: 30%;
+            margin-bottom: 6px;
+        }
+
+        h2 {
+            color: #00ff88;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+
+    <h1>Authenticity Result</h1>
+
+    <img src="{{ img_path }}">
+
+    <h2>AI Prediction: {{ ai_result }}</h2>
+
+    <h3>QR Raw Data:</h3>
+    <p>{{ qr_data }}</p>
+
+    {% if product_info %}
+        <h3>Extracted Product Details:</h3>
+        <ul>
+        {% for key, value in product_info.items() %}
+            <li><b>{{ key }}:</b> {{ value }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p style="color:red;">No detailed product info found inside QR</p>
+    {% endif %}
+
+    <a href="/">Go Back</a>
+</div>
+
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result | AuthentiScan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --accent: #f1f6f7;
+            --dark: #260453;
+            --darker: #12366c;
+            --light: #ffffff;
+            --gray: #94a3b8;
+            --card-bg: rgba(39, 9, 74, 0.8);
+        }
+
+        body {
+           background: linear-gradient(135deg, #e2d0e2 50%, #e1d4e0 100%);
+            min-height: 200vh;
+            color: var(--light);
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 20px 0;
+            background: rgba(3, 30, 57, 0.95);
+            border-bottom: 1px solid rgba(79, 84, 200, 0.2);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            color:white;
+        }
+
+        .logo-text {
+            font-size: 40px;
+            font-weight: 700;
+            background: white;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(9, 2, 41, 0.15);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: fadeIn 0.7s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-card h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: pink;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-section {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .label {
+            color: pink;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .success {
+            color: #00ff9d;
+        }
+
+        .danger {
+            color: #ff4d6d;
+        }
+
+        .preview-img {
+            width: 280px;
+            height: auto;
+            border-radius: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            margin-top: 15px;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--light);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: transparent;
+            border: 2px solid var(--primary);
+        }
+
+        footer {
+            background: rgba(15, 20, 25, 0.9);
+            padding: 25px 0;
+            text-align: center;
+            color: var(--gray);
+            border-top: 1px solid rgba(79, 84, 200, 0.15);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-shield-check"></i></div>
+                <div class="logo-text">AuthentiScan</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN RESULT CARD -->
+    <div class="container">
+        <div class="result-card">
+
+            <h1>Verification Result</h1>
+
+            <!-- AI PREDICTION -->
+            <div class="result-section">
+                <div class="label">QR verification Result</div>
+                <div class="value {{ 'success' if ai_result == 'Genuine Product' else 'danger' }}">
+                    {{ ai_result }}
+                </div>
+            </div>
+
+            <!-- QR DATA -->
+            <div class="result-section">
+                <div class="label">QR Code URL:</div>
+                <div class="value">
+                    {% if product_info.qr_url %}
+                        <a href="{{ product_info.qr_url }}" target="_blank" style="color: var(--accent); text-decoration:none;">
+                            {{ product_info.qr_url }}
+                        </a>
+                    {% else %}
+                        <span class="danger">No QR Code Detected</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- IMAGE PREVIEW -->
+            <div class="result-section">
+                <div class="label">Uploaded Image:</div>
+                <img src="/{{ img_path }}" class="preview-img">
+            </div>
+
+            <button class="btn" onclick="window.location.href='/index'">
+                Go Back to Dashboard
+            </button>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        &copy; 2023 AuthentiScan | Department of MCA Project
+    </footer>
+
+</body>
+</html>
+

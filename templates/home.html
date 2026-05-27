@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+
+    <style>
+        body { background: #490581; color: white; text-align: center; font-family: Arial; }
+        .container { margin-top: 80px; }
+        h1 { font-size: 40px; color: #00eaff; }
+        p { color: #bbb; }
+        .btn-box {
+            background: #12ba74; padding: 40px;
+            border-radius: 20px; width: 500px; margin: auto;
+            box-shadow: 0px 0px 20px #0099ff;
+        }
+        button {
+            width: 80%; padding: 15px; margin: 20px auto;
+            background: #00eaff; border: none; font-size: 18px;
+            border-radius: 12px; font-weight:bold;
+        }
+        button:hover { background:#0099ff; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Dashboard</h1>
+    <p>Select verification method</p>
+
+    <div class="btn-box">
+        <button onclick="window.location.href='/index'">QR-Based Verification</button>
+
+        <button onclick="window.location.href='/ai_verify'">AI Package Verification</button>
+
+    </div>
+</div>
+
+</body>
+</html>

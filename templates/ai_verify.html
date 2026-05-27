@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Package Verification</title>
+    <style>
+        body { background: linear-gradient(135deg, #e4cce4 50%, #f2dff1 100%); color: #e7c1e5; text-align: center; font-family: Arial; }
+        .container { margin-top: 80px; }
+        h1 { font-size: 40px; color: #180649; }
+        p { color: #0a0329; }
+        input[type="file"] {
+            margin: 20px auto; display:block;
+        }
+        button {
+            width: 200px; padding: 10px; margin-top: 20px;
+            background: #d06af9; border: none; font-size: 16px;
+            border-radius: 12px; font-weight:bold;
+        }
+        button:hover { background:#cf82c7; }
+        #result { margin-top: 20px; font-size: 20px; color: #12ba52; }
+        .upload-box {
+            background: #330340;
+            padding: 40px;
+            border-radius: 20px;
+            width: 450px;
+            margin: auto;
+            box-shadow: 0px 0px 20px #0099ff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Package Verification</h1>
+        <p>Upload the package image to verify</p>
+        <div class="upload-box">
+        <form action="/ai_verify" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Verify</button>
+        </form>
+        </div>
+
+        {% if result %}
+            <div id="result">{{ result }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

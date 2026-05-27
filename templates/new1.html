@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | AuthentiScan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        :root {
+            --primary: #a94ec8;
+            --secondary: #8f94fb;
+            --accent: #00d4ff;
+            --dark: #730ca3;
+            --darker: #1184b6;
+            --light: #ffffff;
+            --gray: #94a3b8;
+            --card-bg: rgba(26, 31, 46, 0.8);
+        }
+
+        body {
+            background: linear-gradient(135deg, #e7d5e7 50%, #eabae9 100%);
+            color:White;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            background: rgba(166, 70, 210, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(86, 5, 133, 0.2);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background:white;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: rgb(31, 6, 134);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2rem;
+            color: rgb(8, 23, 65);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Verification Cards */
+        .verification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .verification-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(104, 17, 203, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .verification-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), pink);
+        }
+
+        .verification-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(150, 4, 228, 0.373);
+            border-color: rgba(127, 14, 234, 0.3);
+        }
+
+        .card-icon {
+            font-size: 60px;
+            margin-bottom: 25px;
+            color: var(--accent);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+
+        .card-description {
+            color: var(--gray);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            font-size: 1rem;
+            width: 100%;
+            background-color: aqua;
+            max-width: 250px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--light);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(124, 30, 218, 0.3);
+        }
+
+        .btn-secondary {
+             background: var(--primary);
+            color: var(--light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(90, 7, 124, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(103, 11, 174, 0.9);
+            padding: 30px 0;
+            margin-top: auto;
+            border-top: 1px solid rgba(99, 10, 176, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .verification-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .verification-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-check"></i>
+                </div>
+                <div class="logo-text">AuthentiScan</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Verification Dashboard</h1>
+            <p><b>Select your preferred method to verify product authenticity</b></p>
+        </div>
+
+        <div class="verification-grid">
+            <!-- QR Verification Card -->
+            <div class="verification-card">
+                <div class="card-icon">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <h2 class="card-title">QR Code Verification</h2>
+                <p class="card-description">
+                    Scan  QR codes to instantly verify product authenticity.And know whether the product is genuine or counterfeit.
+                    
+                </p>
+                 <button class="btn btn-secondary"onclick="window.location.href='/index'">QR-Based Verification</button>
+            </div>
+
+            <!-- AI Package Verification Card -->
+            <div class="verification-card">
+                <div class="card-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h2 class="card-title">AI Package Verification</h2>
+                <p class="card-description">
+                    Use advanced computer vision to analyze product packaging. 
+                    Our AI detects counterfeit products by examining logos, colors, and security features.
+                </p>
+                 <button class="btn btn-secondary" onclick="window.location.href='/ai_verify'">AI Package Verification</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                &copy; 2025 AuthentiScan. All rights reserved. | Department of MCA Project
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation to cards on load
+            const cards = document.querySelectorAll('.verification-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+
+            // Add click animation to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

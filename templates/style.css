@@ -1,0 +1,117 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Body Styling */
+body {
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main Container */
+.container, .result-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  text-align: center;
+  width: 90%;
+  max-width: 450px;
+}
+
+/* Headings */
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  background: linear-gradient(45deg, #00ffff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Paragraph */
+p {
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+/* Upload Box */
+.upload-box {
+  display: block;
+  border: 2px dashed #00ffff;
+  padding: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.upload-box:hover {
+  background: rgba(0, 255, 255, 0.1);
+}
+
+.upload-box input {
+  display: none;
+}
+
+.upload-box span {
+  font-size: 1rem;
+  color: #00ffff;
+}
+
+/* Buttons */
+.btn {
+  background: linear-gradient(45deg, #00ffff, #00ff88);
+  color: #000;
+  font-weight: bold;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00ffff;
+}
+
+/* Result Card */
+.result-card {
+  padding: 25px;
+  border-radius: 15px;
+  margin: 20px 0;
+}
+
+.result-card.genuine {
+  background: rgba(0, 255, 128, 0.2);
+  border: 2px solid #00ff88;
+}
+
+.result-card.fake {
+  background: rgba(255, 0, 0, 0.2);
+  border: 2px solid #ff5555;
+}
+
+/* Back Button */
+.back-btn {
+  background: linear-gradient(45deg, #00ffff, #00ff88);
+}
+
+/* Footer */
+footer {
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: #aaa;
+}

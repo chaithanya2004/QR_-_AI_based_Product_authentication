@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #d7b5d6 50%, #dcbfdb 100%);
+            color: white;
+            text-align: center;
+            font-family: Arial;
+            margin: 0;
+            height: 100vh;
+
+            /* ONLY CHANGE: center content */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            /* ONLY CHANGE: remove margin-top */
+            background: #1d012e;
+            padding: 100px;
+            width: 400px;
+            border-radius: 20px;
+            margin: auto;
+            box-shadow: 0px 0px 20px #00eaff;
+        }
+
+        input {
+            width: 80%;
+            padding: 12px;
+            margin: 10px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #00eaff;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0099ff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1 style="color:#00eaff;">Login</h1>
+
+    <form action="/login_user" method="POST">
+        <input type="text" placeholder="Email" required><br>
+        <input type="password" placeholder="Password" required><br>
+        <button type="submit">Login</button>
+
+        <!-- ONLY ADDITION -->
+        <p style="margin-top:15px; font-size:14px;">
+            Don't have an account?
+            <a href="/signup" style="color:#00eaff; text-decoration:none; font-weight:bold;">
+                Sign Up
+            </a>
+        </p>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verification Result</title>
+    <style>
+        body { background: #490581; color: white; text-align: center; font-family: Arial; }
+        .container { margin-top: 50px; }
+        h1 { font-size: 40px; color: #00eaff; }
+        img { max-width: 400px; margin-top: 20px; border-radius: 12px; border: 2px solid #00eaff; }
+        p { font-size: 24px; color: #12ba52; margin-top: 20px; font-weight: bold; }
+        a { display: inline-block; margin-top: 30px; padding: 10px 20px; background: #00eaff; color: white; text-decoration: none; border-radius: 12px; }
+        a:hover { background:#0099ff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verification Result</h1>
+        <img src="{{ image_url }}" alt="Uploaded Image">
+        <p>{{ result }}</p>
+        <a href="/">Verify Another Package</a>
+    </div>
+</body>
+</html>

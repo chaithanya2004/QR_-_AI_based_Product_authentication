@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Sequence Diagram">
+    <mxGraphModel dx="1000" dy="800" grid="1" gridSize="10"
+      guides="1" tooltips="1" connect="1" arrows="1"
+      fold="1" page="1" pageScale="1"
+      pageWidth="850" pageHeight="1100">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Lifelines -->
+        <mxCell id="user" value="User"
+          style="rounded=1;fillColor=#ffffff;strokeColor=#000000;"
+          vertex="1" parent="1">
+          <mxGeometry x="120" y="40" width="100" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="system" value="System"
+          style="rounded=1;fillColor=#ffffff;strokeColor=#000000;"
+          vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="120" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Messages -->
+        <mxCell id="m1" value="Login"
+          style="endArrow=block;strokeColor=#000000;"
+          edge="1" parent="1" source="user" target="system">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="120" as="sourcePoint"/>
+            <mxPoint x="360" y="120" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m2" value="Select Verification Type"
+          style="endArrow=block;strokeColor=#000000;"
+          edge="1" parent="1" source="user" target="system">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="170" as="sourcePoint"/>
+            <mxPoint x="360" y="170" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m3" value="Scan QR Code"
+          style="endArrow=block;strokeColor=#000000;"
+          edge="1" parent="1" source="user" target="system">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="220" as="sourcePoint"/>
+            <mxPoint x="360" y="220" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m4" value="Validate QR Code"
+          style="endArrow=block;strokeColor=#000000;"
+          edge="1" parent="1" source="system" target="system">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="270" as="sourcePoint"/>
+            <mxPoint x="420" y="270" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m5" value="Display Result"
+          style="endArrow=block;strokeColor=#000000;"
+          edge="1" parent="1" source="system" target="user">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="320" as="sourcePoint"/>
+            <mxPoint x="240" y="320" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m6" value="Upload Package Image"
+          style="endArrow=block;strokeColor=#000000;"
+          edge="1" parent="1" source="user" target="system">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="380" as="sourcePoint"/>
+            <mxPoint x="360" y="380" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m7" value="Analyze Image using AI"
+          style="endArrow=block;strokeColor=#000000;"
+          edge="1" parent="1" source="system" target="system">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="430" as="sourcePoint"/>
+            <mxPoint x="420" y="430" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m8" value="Display Result"
+          style="endArrow=block;strokeColor=#000000;"
+          edge="1" parent="1" source="system" target="user">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="480" as="sourcePoint"/>
+            <mxPoint x="240" y="480" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

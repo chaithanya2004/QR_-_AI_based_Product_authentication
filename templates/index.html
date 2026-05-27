@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Product Authenticity Checker</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #dad2d9 50%, #e4c5e3 100%); background: #e0cfe0;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 80px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #290547;
+        }
+
+        p {
+            color: #1f032c;
+            margin-bottom: 30px;
+        }
+
+        .upload-box {
+            background: #330340;
+            padding: 40px;
+            border-radius: 20px;
+            width: 450px;
+            margin: auto;
+            box-shadow: 0px 0px 20px #0099ff;
+        }
+
+        input[type=file] {
+            margin: 20px 0;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: pink;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: rgb(53, 3, 80);
+            color:white;
+            box-shadow: 0 10px 20px rgba(124, 30, 218, 0.3);
+             transform: translateY(-3px);
+        
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>AI + QR Product Authenticity Checker</h1>
+    <p>Upload product QR image to verify originality</p>
+
+    <div class="upload-box">
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required><br>
+            <button type="submit">Check Authenticity</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

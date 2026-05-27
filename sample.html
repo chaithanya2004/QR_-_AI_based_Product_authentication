@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tasty Bites: Your cravings, delivered faster than your Wi-Fi lag</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent1:#ff7043; --accent2:#ff5722; --glass: rgba(255,255,255,0.12);
+      --bg:#0b0b0b; --card-bg: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Poppins',sans-serif; color:#111; background:#0f0f0f;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; overflow-x:hidden;
+    }
+
+    /* PRELOADER */
+    #preloader{ position:fixed; inset:0; background:linear-gradient(135deg,#0b0b0b,#121212); display:flex; align-items:center; justify-content:center; z-index:9999; }
+    .loader{ width:110px; height:110px; border-radius:18px; background:linear-gradient(180deg,#fff,#fff); display:flex; align-items:center; justify-content:center; box-shadow:0 18px 60px rgba(0,0,0,0.6); }
+    .loader .dots{ display:flex; gap:6px }
+    .loader .dots div{ width:12px; height:12px; border-radius:50%; background:linear-gradient(45deg,var(--accent1),var(--accent2)); animation:bounce 0.9s infinite ease-in-out }
+    .loader .dots div:nth-child(2){ animation-delay:0.12s }
+    .loader .dots div:nth-child(3){ animation-delay:0.22s }
+    @keyframes bounce{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-10px) } }
+
+    /* Animated background shapes */
+    .bg-shapes{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden }
+    .shape{ position:absolute; border-radius:50%; opacity:0.12; filter:blur(40px); animation:float 10s linear infinite }
+    .shape.s1{ width:420px;height:420px; background:radial-gradient(circle at 10% 10%, #ff7043, transparent); left:-80px; top:-40px }
+    .shape.s2{ width:340px;height:340px; background:radial-gradient(circle at 30% 30%, #ffcc80, transparent); right:-100px; bottom:-60px; animation-duration:14s }
+    .shape.s3{ width:220px;height:220px; background:radial-gradient(circle at 60% 40%, #ff8a65, transparent); left:20%; top:60%; animation-duration:12s }
+    @keyframes float{ 0%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-40px) rotate(45deg)} 100%{transform:translateY(0) rotate(0deg)} }
+
+    /* Top nav + dark toggle */
+    nav{ position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:999; display:flex; gap:12px; background:rgba(255,255,255,0.04); padding:8px 14px; border-radius:40px; backdrop-filter: blur(8px); border:1px solid rgba(255,255,255,0.03)}
+    nav a{ color: #fff; text-decoration:none; padding:6px 10px; font-weight:600; font-size:14px }
+    nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(255,87,34,0.6) }
+    .controls-right{ position:fixed; right:18px; top:18px; display:flex; gap:10px; z-index:1000 }
+    .toggle{ background:transparent; border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:12px; color:#fff; cursor:pointer }
+
+    /* Header / hero */
+    header.top{ height:64vh; min-height:420px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; color:#fff }
+    header .hero-bg{ position:absolute; inset:0; background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80') center/cover; transform:scale(1.06); filter:brightness(0.5); z-index:0 }
+    header .hero-content{ position:relative; z-index:2; text-align:center; padding:20px; max-width:1100px }
+    header h1{ font-size:clamp(30px,5vw,60px); margin:0 0 12px; letter-spacing:1px; color:#fff; text-shadow:0 10px 40px rgba(0,0,0,0.6) }
+    header p{ font-size:clamp(15px,1.3vw,18px); margin:0 0 20px; opacity:0.95 }
+    .cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap }
+    .btn{ background:linear-gradient(45deg,var(--accent1),var(--accent2)); color:white; border:none; padding:12px 18px; border-radius:30px; cursor:pointer; font-weight:700; box-shadow:0 10px 30px rgba(255,87,34,0.14); transition:transform .25s ease, box-shadow .25s }
+    .btn:hover{ transform:translateY(-6px); box-shadow:0 20px 40px rgba(255,87,34,0.2) }
+
+    /* layout container */
+    .container{ max-width:1200px; margin:-80px auto 80px; padding:24px; position:relative; z-index:3 }
+    section{ margin:36px 0 }
+    .card{ background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); padding:18px; border-radius:14px; box-shadow:0 12px 40px rgba(3,3,3,0.6); border:1px solid rgba(255,255,255,0.03); color:#fff }
+
+    h2{ font-size:26px; margin:0 0 10px; color:#fff }
+    h3{ font-size:20px; color:var(--accent1); margin:0 0 8px }
+
+    /* MENU grid expanded */
+    .menu-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px }
+    .menu-item{ display:flex; gap:12px; align-items:center; padding:12px; border-radius:12px; transition:transform .28s ease, box-shadow .28s ease; cursor:default; background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .menu-item:hover{ transform:translateY(-8px); box-shadow:0 20px 60px rgba(0,0,0,0.6) }
+    .thumb{ width:84px; height:84px; flex:0 0 84px; border-radius:10px; overflow:hidden }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
+    .meta{ flex:1 }
+    .meta h4{ margin:0 0 6px; color:#fff; font-size:18px }
+    .meta p{ margin:0; font-size:13px; opacity:0.9 }
+    .meta .price{ font-weight:800; margin-top:8px; color:#fff }
+    .controls{ display:flex; gap:8px; align-items:center }
+    .qty{ display:flex; align-items:center; gap:6px; background:var(--glass); padding:6px 8px; border-radius:8px }
+    .qty button{ background:transparent; border:1px solid rgba(255,255,255,0.08); color:#fff; width:30px; height:30px; border-radius:6px; cursor:pointer }
+    .qty span{ min-width:22px; text-align:center; font-weight:700 }
+    .add{ background:linear-gradient(45deg,#4caf50,#2e7d32); padding:8px 12px; border-radius:10px; color:white; font-weight:800 }
+
+    /* Gallery */
+    .gallery{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px }
+    .gallery img{ width:100%; height:160px; object-fit:cover; border-radius:10px; transition:transform .35s ease, filter .35s }
+    .gallery img:hover{ transform:scale(1.07); filter:brightness(1.05) }
+
+    /* Schedule */
+    .schedule{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px }
+    .schedule .event{ background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:14px; border-radius:10px }
+    .time{ font-weight:800; font-size:18px }
+
+    /* Team */
+    .team-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px }
+    .member{ text-align:center; padding:12px }
+    .member img{ width:120px; height:120px; border-radius:16px; object-fit:cover; display:block; margin:0 auto 8px }
+    .member h4{ margin:0; color:#fff }
+    .member p{ margin:0; font-size:13px; opacity:0.85 }
+
+    /* Cart FAB + modal */
+    .cart-fab{ position:fixed; right:22px; bottom:22px; background:linear-gradient(45deg,#ff7043,#ff5722); width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; z-index:1001; box-shadow:0 18px 40px rgba(0,0,0,0.5); cursor:pointer }
+    .cart-count{ position:absolute; top:6px; right:6px; background:#fff; color:var(--accent2); font-weight:700; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px }
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2000 }
+    .modal.show{ display:flex }
+    .modal .panel{ width:96%; max-width:560px; background:rgba(0,0,0,0.6); border-radius:14px; padding:18px; border:1px solid rgba(255,255,255,0.04); box-shadow:0 30px 80px rgba(0,0,0,0.7); color:#fff }
+    .cart-item{ display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.03) }
+
+    footer{ color:#fff; opacity:0.85; text-align:center; padding:28px 10px }
+
+    /* responsive */
+    @media (max-width:700px){ nav{ left:12px; transform:none; top:auto; bottom:12px; right:12px } .container{ margin:-40px 12px 60px } .hero-content{ padding:12px } }
+
+    /* reveal */
+    .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease }
+    .reveal.show{ opacity:1; transform:none }
+
+    /* dark mode */
+    body.light{ background:linear-gradient(180deg,#fff,#fafafa); color:#222 }
+    body.light .card{ background:#fff; color:#111 }
+    body.light nav{ background:rgba(0,0,0,0.04) }
+
+  </style>
+</head>
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="dots">
+        <div></div><div></div><div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Animated background shapes -->
+  <div class="bg-shapes">
+    <div class="shape s1"></div>
+    <div class="shape s2"></div>
+    <div class="shape s3"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav aria-label="Main navigation">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#menu">Menu</a>
+    <a href="#events">Schedule</a>
+    <a href="#team">Team</a>
+    <a href="#register">Register</a>
+  </nav>
+
+  <div class="controls-right">
+    <button class="toggle" id="themeToggle">Toggle Theme</button>
+  </div>
+
+  <!-- HERO -->
+  <header class="top" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>Tasty Bites </h1>
+      <p>Your cravings, delivered faster than your Wi-Fi lag</p>
+      <div class="cta-row">
+        <button class="btn" onclick="document.querySelector('#menu').scrollIntoView({behavior:'smooth'})">Order Now</button>
+        <button class="btn" onclick="document.querySelector('#register').scrollIntoView({behavior:'smooth'})">Register</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ABOUT -->
+    <section id="about" class="card reveal">
+      <h2>About — Team Dynamo</h2>
+      <p style="font-size:16px">We, the <strong>Team Dynamo</strong>, proudly present <strong>NEXUS</strong> — a vibrant food festival featuring stalls, live demos, photography contests and quick-eat challenges. Come enjoy delicious food and win exciting prizes.</p>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="reveal">
+      <h2>Photo Gallery</h2>
+      <div class="card">
+        <div class="gallery">
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=60" alt="g1">
+          <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=60" alt="g2">
+          <!-- <img src="https://images.unsplash.com/photo-1541542684-8e3f90c4f5d8?auto=format&fit=crop&w=800&q=60" alt="g3"> -->
+          <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=60" alt="g4">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=60" alt="g5">
+          <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=60" alt="g6">
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="reveal">
+      <h2>Menu — Wide Variety</h2>
+      <div class="card">
+        <div style="margin-bottom:12px"><strong style="color:var(--accent2)">Categories:</strong> Indian • Chinese • Continental • Desserts • Beverages</div>
+        <div class="menu-grid" id="menu-grid"></div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="events" class="reveal">
+      <h2>Event Schedule</h2>
+      <div class="card schedule">
+        <div class="event">
+          <div class="time">10:00 AM</div>
+          <div class="title">Opening & Welcome</div>
+          <div class="desc">Introduction by Team Dynamo & ribbon cutting.</div>
+        </div>
+        <div class="event">
+          <div class="time">11:30 AM</div>
+          <div class="title">Live Cooking Demo</div>
+          <div class="desc">Chef showcase with tips and samples.</div>
+        </div>
+        <div class="event">
+          <div class="time">1:00 PM</div>
+          <div class="title">Food Photography Contest</div>
+          <div class="desc">Participants submit photos; winners announced later.</div>
+        </div>
+        <div class="event">
+          <div class="time">3:00 PM</div>
+          <div class="title">Quick-Eat Challenges</div>
+          <div class="desc">Timed eating contests with prizes.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" class="reveal">
+      <h2>Meet Team Dynamo</h2>
+      <div class="card team-grid">
+        <div class="member">
+          <img src="Havyas.jpg" alt="member1">
+          <h4>Havyas</h4>
+          <p>CEO</p>
+        </div>
+        <div class="member">
+          <img src="Vinay.jpg" alt="member2">
+          <h4>Vinay Kumar</h4>
+          <p>Manager</p>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register" class="reveal">
+      <h2>Register Now</h2>
+      <div class="card">
+        <form id="regForm" onsubmit="event.preventDefault(); handleRegister()" style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="rname" required placeholder="Full name" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff" />
+          <input id="remail" required placeholder="Email" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff" />
+          <!-- <input id="rdept" required placeholder="College / Department" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff" /> -->
+          <button class="btn" type="submit">Register</button>
+        </form>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="cart-fab" id="cartFab" onclick="openCart()" aria-label="Open cart">🛒<div class="cart-count" id="cartCount">0</div></div>
+
+  <div class="modal" id="cartModal" aria-hidden="true">
+    <div class="panel">
+      <h3>Your Cart</h3>
+      <div id="cartList" style="max-height:300px;overflow:auto;margin-top:10px"></div>
+      <div class="cart-actions">
+        <div style="font-weight:800">Total: ₹<span id="cartTotal">0</span></div>
+        <button class="btn" onclick="placeOrder()">Place Order</button>
+        <button onclick="closeCart()" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© <span id="year"></span> Nexus • Team Dynamo</footer>
+
+<script>
+// WAIT FOR PRELOADER
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{ document.getElementById('preloader').style.opacity='0'; document.getElementById('preloader').style.transition='opacity 400ms ease'; setTimeout(()=>document.getElementById('preloader').style.display='none',450) },600);
+});
+
+// Expanded menu data
+const menuData = [
+  {id:1, name:'Cheese Burger', cat:'Continental', desc:'Classic grilled burger with cheese', price:120, img:'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=60'},
+  {id:2, name:'Margherita Pizza', cat:'Continental', desc:'Thin crust + fresh basil', price:250, img:'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&w=400&q=60'},
+  {id:3, name:'Creamy Pasta', cat:'Continental', desc:'Penne in creamy tomato sauce', price:180, img:'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=400&q=60'},
+  {id:4, name:'Paneer Tikka', cat:'Indian', desc:'Smoky grilled paneer', price:150, img:'https://images.unsplash.com/photo-1604908177523-5a5c0e7a9a5d?auto=format&fit=crop&w=400&q=60'},
+  {id:5, name:'Veg Biryani', cat:'Indian', desc:'Aromatic rice with veggies', price:180, img:'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=400&q=60'},
+  {id:6, name:'Chow Mein', cat:'Chinese', desc:'Stir-fried noodles with veggies', price:140, img:'https://images.unsplash.com/photo-1604908177079-1f7f8b1b5a98?auto=format&fit=crop&w=400&q=60'},
+  {id:7, name:'Spring Rolls', cat:'Chinese', desc:'Crispy veg rolls', price:90, img:'https://images.unsplash.com/photo-1604908176995-8c6b5d5b9f52?auto=format&fit=crop&w=400&q=60'},
+  {id:8, name:'Gulab Jamun', cat:'Dessert', desc:'Classic sweet dumplings', price:60, img:'https://images.unsplash.com/photo-1599785209707-7f3f5c6d0d2a?auto=format&fit=crop&w=400&q=60'},
+  {id:9, name:'Chocolate Sundae', cat:'Dessert', desc:'Creamy ice cream with toppings', price:120, img:'https://images.unsplash.com/photo-1543779501-5f0bd4b0f5d9?auto=format&fit=crop&w=400&q=60'},
+  {id:10, name:'Lemonade', cat:'Beverage', desc:'Refreshing lime drink', price:50, img:'https://images.unsplash.com/photo-1604908177142-0d3d9f0a8a4f?auto=format&fit=crop&w=400&q=60'}
+];
+
+const state = { cart: {} };
+
+function renderMenu(){
+  const grid = document.getElementById('menu-grid');
+  // group by category
+  const cats = {};
+  menuData.forEach(i=>{ cats[i.cat] = cats[i.cat]||[]; cats[i.cat].push(i) });
+
+  for(const cat in cats){
+    const header = document.createElement('div'); header.style.gridColumn='1/-1'; header.innerHTML = `<h3>${cat}</h3>`; grid.appendChild(header);
+    cats[cat].forEach(item=>{
+      const div = document.createElement('div'); div.className='menu-item card';
+      div.innerHTML = `
+        <div class="thumb"><img src="${item.img}" alt="${item.name}"/></div>
+        <div class="meta">
+          <h4>${item.name}</h4>
+          <p>${item.desc}</p>
+          <div class="price">₹${item.price}</div>
+        </div>
+        <div class="controls">
+          <div class="qty" data-id="${item.id}">
+            <button onclick="updateQty(${item.id}, -1)">-</button>
+            <span id="qty-${item.id}">0</span>
+            <button onclick="updateQty(${item.id}, 1)">+</button>
+          </div>
+          <button class="add" onclick="addToCart(${item.id})">Add</button>
+        </div>
+      `;
+      grid.appendChild(div);
+    })
+  }
+}
+
+function updateQty(id, delta){
+  const el = document.getElementById('qty-'+id);
+  let q = parseInt(el.textContent || '0') + delta;
+  if(q<0) q=0; el.textContent = q;
+}
+
+function addToCart(id){
+  const qtyEl = document.getElementById('qty-'+id);
+  let qty = parseInt(qtyEl.textContent || '0');
+  if(qty<=0){ alert('Increase quantity first'); return }
+  const item = menuData.find(m=>m.id===id);
+  if(!state.cart[id]) state.cart[id]={...item, qty:0}; state.cart[id].qty += qty; qtyEl.textContent = 0; refreshCartUI();
+}
+
+function refreshCartUI(){
+  const count = Object.values(state.cart).reduce((s,i)=>s + i.qty,0);
+  document.getElementById('cartCount').textContent = count;
+  const list = document.getElementById('cartList'); list.innerHTML=''; let total = 0;
+  Object.values(state.cart).forEach(it=>{ total += it.qty * it.price; const row = document.createElement('div'); row.className='cart-item'; row.innerHTML = `<div>${it.name} x ${it.qty}</div><div>₹${it.qty * it.price}</div>`; list.appendChild(row); });
+  document.getElementById('cartTotal').textContent = total;
+}
+
+function openCart(){ document.getElementById('cartModal').classList.add('show'); document.getElementById('cartModal').setAttribute('aria-hidden','false'); }
+function closeCart(){ document.getElementById('cartModal').classList.remove('show'); document.getElementById('cartModal').setAttribute('aria-hidden','true'); }
+
+function placeOrder(){ if(Object.keys(state.cart).length===0){ alert('Cart is empty'); return } alert('Order placed! Total: ₹' + document.getElementById('cartTotal').textContent); state.cart = {}; refreshCartUI(); closeCart(); }
+
+// reveal on scroll
+const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); } }); },{threshold:0.18});
+function revealAll(){ document.querySelectorAll('.reveal').forEach(el=>io.observe(el)); }
+
+// register handler
+function handleRegister(){ const name=document.getElementById('rname').value; const email=document.getElementById('remail').value; const dept=document.getElementById('rdept').value; if(!name||!email||!dept){ alert('Please fill all fields'); return } alert('Thanks '+name+'! You are registered.'); document.getElementById('regForm').reset(); }
+
+// theme toggle
+const themeToggle = document.getElementById('themeToggle'); themeToggle.addEventListener('click', ()=>{ document.body.classList.toggle('light'); localStorage.setItem('siteTheme', document.body.classList.contains('light')? 'light':'dark'); });
+// persist theme
+if(localStorage.getItem('siteTheme')==='light') document.body.classList.add('light');
+
+// populate year and init
+document.getElementById('year').textContent = new Date().getFullYear(); renderMenu(); refreshCartUI(); revealAll();
+
+// smooth nav
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click', e=>{ e.preventDefault(); document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'}); }));
+
+// keyboard escape to close modal
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeCart(); });
+
+</script>
+</body>
+</html>

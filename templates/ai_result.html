@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Package Result</title>
+    <style>
+        body {
+           background: linear-gradient(135deg, #ddc2dc 50%, #d5b7d4 100%);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .container {
+            background: #570c75;
+            padding: 30px;
+            border-radius: 15px;
+            width: 40%;
+            margin: auto;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+        }
+
+        img {
+            width: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 3px solid #00f5ff;
+        }
+
+        .result {
+            font-size: 32px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #00ff7f;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #00e0ff;
+            color: black;
+            font-weight: bold;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Package Verification Result</h1>
+
+    <img src="/{{ img_path }}" alt="Uploaded Image">
+
+    <p class="result">{{ result }}</p>
+
+    <a href="/ai_verify" class="btn">Verify Another</a>
+</div>
+
+</body>
+</html>
+
