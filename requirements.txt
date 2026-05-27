@@ -1,9 +1,10 @@
 Flask==3.0.3
 gunicorn==22.0.0
-numpy
-pandas
-Pillow
-scikit-learn
-opencv-python-headless
-qrcode
-pyzbar
+numpy==1.23.5
+pandas==2.0.3
+Pillow==10.3.0
+scikit-learn==1.3.2
+opencv-python-headless==4.10.0.84
+qrcode==7.4.2
+pyzbar==0.1.9
+tensorflow-cpu==2.12.0
