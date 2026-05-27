@@ -1,10 +1,10 @@
 flask
 gunicorn
-numpy
+numpy==1.23.5
 pillow
 pandas
 scikit-learn
 qrcode
 pyzbar
 opencv-python-headless==4.10.0.84
-tensorflow==2.13.0
+tensorflow-cpu==2.12.0
