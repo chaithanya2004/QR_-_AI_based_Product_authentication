@@ -119,7 +119,7 @@ notebook==7.4.7
 notebook_shim==0.2.4
 numpy==2.2.6
 openai==2.37.0
-opencv-python==4.12.0.88
+opencv-python-headless==4.12.0.88
 opt_einsum==3.4.0
 optree==0.17.0
 packaging==25.0
