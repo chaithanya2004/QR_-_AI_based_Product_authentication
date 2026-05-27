@@ -10,6 +10,9 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
+@app.route("/")
+def home():
+    return "App running"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
